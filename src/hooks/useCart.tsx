@@ -34,7 +34,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const addProduct = async (productId: number) => {
     try {
-      // TODO
+      const data = await api.get(`/products?id=${productId}`).then(product => product.data[0]);
+      setCart([...cart, {...data, amount: 1}]);
     } catch {
       // TODO
     }
@@ -42,7 +43,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const removeProduct = (productId: number) => {
     try {
-      // TODO
+      // await api.delete('/cart' {})
     } catch {
       // TODO
     }
@@ -53,7 +54,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     amount,
   }: UpdateProductAmount) => {
     try {
-      // TODO
+      cart.filter(product => product.id === productId).map(product => product.amount++)
     } catch {
       // TODO
     }

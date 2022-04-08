@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   MdDelete,
   MdAddCircleOutline,
@@ -6,7 +5,7 @@ import {
 } from 'react-icons/md';
 
 import { useCart } from '../../hooks/useCart';
-// import { formatPrice } from '../../util/format';
+import { formatPrice } from '../../util/format';
 import { Container, ProductTable, Total } from './styles';
 
 interface Product {
@@ -20,32 +19,37 @@ interface Product {
 const Cart = (): JSX.Element => {
   const { cart, removeProduct, updateProductAmount } = useCart();
 
-  // const cartFormatted = cart.map(product => ({
-  //   // TODO
-  // }))
-  // const total =
-  //   formatPrice(
-  //     cart.reduce((sumTotal, product) => {
-  //       // TODO
-  //     }, 0)
-  //   )
+  const cartFormatted = cart.map((product:Product) => {
+    return {
+      formattedPrice: formatPrice(product.price),
+      subTotal: formatPrice(product.amount*product.price)
+    }
+  })
+  const total =
+    formatPrice(
+      cart.reduce((sumTotal, product) => {
+        sumTotal += product.price * product.amount;
+        return sumTotal
+      }, 0)
+    )
 
-  function handleProductIncrement(product: Product) {
+  async function handleProductIncrement(product: Product) {
     const amount = product.amount + 1 as number;
     const productId = product.id as number;
-      updateProductAmount({productId, amount})
+      await updateProductAmount({productId, amount})
+      localStorage.setItem('@RocketShoes:cart', JSON.stringify(cart))
   }
 
   function handleProductDecrement(product: Product) {
     const amount = product.amount - 1 as number;
     const productId = product.id as number;
       updateProductAmount({productId, amount})
+
   }
 
   function handleRemoveProduct(productId: number) {
-
+    
     removeProduct(productId);
-    console.log(cart)
   }
 
   return (
@@ -63,16 +67,13 @@ const Cart = (): JSX.Element => {
         <tbody>
           {cart.map((product => {
             return(
-              <tr data-testid="product">
+              <tr data-testid="product" key={product.id}>
             <td>
               <img src={product.image} alt={product.title}/>
             </td>
             <td>
               <strong>{product.title}</strong>
-              <span>{new Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            }).format(product.price)}</span>
+              <span>{cartFormatted[cart.indexOf(product)].formattedPrice}</span>
             </td>
             <td>
               <div>
@@ -101,10 +102,7 @@ const Cart = (): JSX.Element => {
             </td>
             <td>
               <strong>{product.title}</strong>
-              <span>{new Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            }).format(product.price * product.amount)}</span>
+              <span>{cartFormatted[cart.indexOf(product)].subTotal}</span>
             </td>
             <td>
               <button
@@ -128,7 +126,7 @@ const Cart = (): JSX.Element => {
 
         <Total>
           <span>TOTAL</span>
-          <strong>R$ 359,80</strong>
+          <strong>{total}</strong>
         </Total>
       </footer>
     </Container>

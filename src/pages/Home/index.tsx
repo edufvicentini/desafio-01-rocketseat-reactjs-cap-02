@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
 
 import { ProductList } from './styles';
@@ -32,28 +32,30 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      setProducts(await api.get('/products').then(product => product.data));     
+      const productData = await api.get('/products').then(product => product.data) as ProductFormatted[];
+      productData.map(product => (
+        product.priceFormatted = formatPrice(product.price)
+      ))
+      setProducts(productData);     
     } 
     loadProducts();
   }, []);
 
+
+
   function handleAddProduct(id: number) {
     addProduct(id);
-
-    console.log(cartItemsAmount[id])
+    localStorage.setItem('@RocketShoes:cart', JSON.stringify(cart))
   }
 
   return (
     <ProductList>
         {products.map(product => {
           return (
-          <li>
+          <li key={product.id}>
             <img src={product.image} alt={product.title} />  
             <strong>{product.title}</strong>
-            <span>{new Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            }).format(product.price)}</span>
+            <span>{product.priceFormatted}</span>
             <button
           type="button"
           data-testid="add-product-button"

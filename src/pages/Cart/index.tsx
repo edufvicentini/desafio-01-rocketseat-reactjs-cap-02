@@ -37,7 +37,7 @@ const Cart = (): JSX.Element => {
     const amount = product.amount + 1 as number;
     const productId = product.id as number;
       await updateProductAmount({productId, amount})
-      localStorage.setItem('@RocketShoes:cart', JSON.stringify(cart))
+
   }
 
   function handleProductDecrement(product: Product) {

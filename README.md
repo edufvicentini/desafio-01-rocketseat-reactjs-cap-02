@@ -22,9 +22,9 @@ The objective was programming the main functionality of the cart using React and
 ### Web
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="PokedexReact" title="#PokedexReact" src="./assets/Desktop Day-mode.png" width="400px">
+  <img alt="PokedexReact" title="#PokedexReact" src="./assets/Web1.png" width="400px">
 
-  <img alt="PokedexReact" title="#PokedexReact" src="./assets/Desktop Night-mode.png" width="400px">
+  <img alt="PokedexReact" title="#PokedexReact" src="./assets/Web2.png" width="400px">
 </p>
 
 ---

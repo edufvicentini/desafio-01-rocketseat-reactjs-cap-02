@@ -1,7 +1,7 @@
 # desafio-01-rocketseat-reactjs-cap-02
 
-<a href="https://github.com/edufvicentini/pokedex-react-js/blob/master/LICENSE">
-   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="React Pokédex is released under the MIT license." />
+<a href="https://github.com/edufvicentini/desafio-01-rocketseat-reactjs-cap-02/blob/master/LICENSE">
+   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="desafio-01-rocketseat-reactjs-cap-02 is released under the MIT license." />
  </a>
 
 ## 💻 About the project
